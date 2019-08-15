@@ -3,26 +3,37 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.ServiceBus;
+using Microsoft.Extensions.Configuration;
 
 namespace ServiceBusDeadLetterMonitor
 {
     class Program
     {
-        const string ServiceBusConnectionString = "Endpoint=sb://jvsbdemo.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=UUGt2C75Tkn8T71IisJ2Mf5l/LhyeMYJDMcOCaTnf8M=";
-        const string DLQueueName = "sbq1/$DeadLetterQueue";
-        const string QueueName = "sbq1";
         static IQueueClient queueClient;
         static IQueueClient dlqClient;
+        public static IConfigurationRoot Configuration { get; set; }
 
         static void Main(string[] args)
         {
+            var builder = new ConfigurationBuilder();
+            // tell the builder to look for the appsettings.json file
+            builder
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+            builder.AddUserSecrets<Program>();
+            Configuration = builder.Build();
+
             MainAsync().GetAwaiter().GetResult();
         }
 
         static async Task MainAsync()
         {
-            dlqClient = new QueueClient(ServiceBusConnectionString, DLQueueName);
-            queueClient = new QueueClient(ServiceBusConnectionString, QueueName);
+            string connectionString = Configuration["ServiceBus:ConnectionString"];
+            string queueName = Configuration["ServiceBus:Queues:Name"];
+            string dlqueueName = Configuration["ServiceBus:DeadLetterQueue:Name"];
+
+            dlqClient = new QueueClient(connectionString, $"{queueName}/{dlqueueName}");
+            queueClient = new QueueClient(connectionString, queueName);
 
             Console.WriteLine("======================================================");
             Console.WriteLine("Press ENTER key to exit after receiving all the messages.");

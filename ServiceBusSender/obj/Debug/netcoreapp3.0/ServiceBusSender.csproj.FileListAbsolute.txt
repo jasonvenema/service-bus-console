@@ -7,6 +7,20 @@ C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\bin\Debug\netc
 C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\bin\Debug\netcoreapp3.0\Microsoft.Azure.Amqp.dll
 C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\bin\Debug\netcoreapp3.0\Microsoft.Azure.ServiceBus.dll
 C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\bin\Debug\netcoreapp3.0\Microsoft.Azure.Services.AppAuthentication.dll
+C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\bin\Debug\netcoreapp3.0\Microsoft.Extensions.Configuration.dll
+C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\bin\Debug\netcoreapp3.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\bin\Debug\netcoreapp3.0\Microsoft.Extensions.Configuration.Binder.dll
+C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\bin\Debug\netcoreapp3.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\bin\Debug\netcoreapp3.0\Microsoft.Extensions.Configuration.Json.dll
+C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\bin\Debug\netcoreapp3.0\Microsoft.Extensions.Configuration.UserSecrets.dll
+C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\bin\Debug\netcoreapp3.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\bin\Debug\netcoreapp3.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\bin\Debug\netcoreapp3.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\bin\Debug\netcoreapp3.0\Microsoft.Extensions.FileProviders.Physical.dll
+C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\bin\Debug\netcoreapp3.0\Microsoft.Extensions.FileSystemGlobbing.dll
+C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\bin\Debug\netcoreapp3.0\Microsoft.Extensions.Options.dll
+C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\bin\Debug\netcoreapp3.0\Microsoft.Extensions.Options.ConfigurationExtensions.dll
+C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\bin\Debug\netcoreapp3.0\Microsoft.Extensions.Primitives.dll
 C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\bin\Debug\netcoreapp3.0\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll
 C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\bin\Debug\netcoreapp3.0\Microsoft.IdentityModel.Clients.ActiveDirectory.dll
 C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\bin\Debug\netcoreapp3.0\Microsoft.IdentityModel.Logging.dll
@@ -20,3 +34,4 @@ C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\obj\Debug\netc
 C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\obj\Debug\netcoreapp3.0\ServiceBusSender.csproj.CopyComplete
 C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\obj\Debug\netcoreapp3.0\ServiceBusSender.dll
 C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\obj\Debug\netcoreapp3.0\ServiceBusSender.pdb
+C:\Users\javene\source\repos\service-bus-console\ServiceBusSender\bin\Debug\netcoreapp3.0\appsettings.json

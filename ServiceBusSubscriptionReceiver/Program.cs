@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Configuration;
 
-namespace ServiceBusReceiver
+namespace ServiceBusSubscriptionReceiver
 {
     class Program
     {
-        static IQueueClient queueClient;
+        public static ISubscriptionClient subscriptionClient;
         public static IConfigurationRoot Configuration { get; set; }
+        public static string SubscriptionName;
 
         static void Main(string[] args)
         {
@@ -22,25 +23,27 @@ namespace ServiceBusReceiver
             builder.AddUserSecrets<Program>();
             Configuration = builder.Build();
 
+            SubscriptionName = args[0];
+
             MainAsync().GetAwaiter().GetResult();
         }
 
         static async Task MainAsync()
         {
             string connectionString = Configuration["ServiceBus:ConnectionString"];
-            string queueName = Configuration["ServiceBus:Queues:Name"];
-            queueClient = new QueueClient(connectionString, queueName);
+            string topicName = Configuration[$"ServiceBus:Subscriptions:{SubscriptionName}:topic"];
+            subscriptionClient = new SubscriptionClient(connectionString, topicName, SubscriptionName);
 
             Console.WriteLine("======================================================");
-            Console.WriteLine("Press ENTER key to exit after receiving all the messages.");
+            Console.WriteLine($"Receiving for {SubscriptionName} subscription. Press ENTER key to exit after receiving all the messages.");
             Console.WriteLine("======================================================");
 
-            // Register QueueClient's MessageHandler and receive messages in a loop
+            // Register MessageHandler and receive messages in a loop
             RegisterOnMessageHandlerAndReceiveMessages();
 
             Console.ReadKey();
 
-            await queueClient.CloseAsync();
+            await subscriptionClient.CloseAsync();
         }
 
         static void RegisterOnMessageHandlerAndReceiveMessages()
@@ -58,7 +61,7 @@ namespace ServiceBusReceiver
             };
 
             // Register the function that will process messages
-            queueClient.RegisterMessageHandler(ProcessMessagesAsync, messageHandlerOptions);
+            subscriptionClient.RegisterMessageHandler(ProcessMessagesAsync, messageHandlerOptions);
         }
 
         static async Task ProcessMessagesAsync(Message message, CancellationToken token)
@@ -66,22 +69,8 @@ namespace ServiceBusReceiver
             // Process the message
             Console.WriteLine($"Received message: SequenceNumber:{message.SystemProperties.SequenceNumber} Body:{Encoding.UTF8.GetString(message.Body)}");
 
-            if (message.SystemProperties.SequenceNumber % 10 == 0)
-            {
-                Console.WriteLine($"Deadlettering message with sequence {message.SystemProperties.SequenceNumber}");
-
-                await queueClient.DeadLetterAsync(message.SystemProperties.LockToken, "Testing DLQ", "Sending message to DLQ for testing purposes");
-            }
-            else
-            {
-                // Complete the message so that it is not received again.
-                // This can be done only if the queueClient is created in ReceiveMode.PeekLock mode (which is default).
-                await queueClient.CompleteAsync(message.SystemProperties.LockToken);
-            }
-
-            // Note: Use the cancellationToken passed as necessary to determine if the queueClient has already been closed.
-            // If queueClient has already been Closed, you may chose to not call CompleteAsync() or AbandonAsync() etc. calls
-            // to avoid unnecessary exceptions.
+            // Complete the message so that it is not received again.
+            await subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
         }
 
         static Task ExceptionReceivedHandler(ExceptionReceivedEventArgs exceptionReceivedEventArgs)
