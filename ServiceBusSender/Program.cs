@@ -61,7 +61,7 @@ namespace ServiceBusSender
                     // Send the message to the queue.
                     await queueClient.SendAsync(message);
 
-                    Thread.Sleep(2000);
+                    Thread.Sleep(1000);
                 }
             }
             catch (Exception exception)

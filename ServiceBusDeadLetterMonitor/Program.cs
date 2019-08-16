@@ -67,7 +67,7 @@ namespace ServiceBusDeadLetterMonitor
 
         static async Task ProcessMessagesAsync(Message message, CancellationToken token)
         {
-            // Process the message
+            // Process the DL message
             object dlReason = null;
             object dlError = null;
             message.UserProperties.TryGetValue("DeadLetterReason", out dlReason);
@@ -77,6 +77,8 @@ namespace ServiceBusDeadLetterMonitor
             {
                 Console.WriteLine($"Reason:'{dlReason.ToString()}'  Description:'{dlError.ToString()}'");
             }
+
+            // Send the message to the regular queue (non-DL) to attempt re-processing
             await SendMessagesAsync(message);
         }
 
@@ -90,6 +92,8 @@ namespace ServiceBusDeadLetterMonitor
                 // Send the message to the queue.
                 var cloneMessage = message.Clone();
                 await queueClient.SendAsync(cloneMessage);
+
+                // Remove the message from the DLQ (complete it)
                 await dlqClient.CompleteAsync(message.SystemProperties.LockToken);
             }
             catch (Exception exception)

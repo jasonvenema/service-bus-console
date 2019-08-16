@@ -57,7 +57,7 @@ namespace ServiceBusReceiver
                 AutoComplete = false
             };
 
-            // Register the function that will process messages
+            // Register the function that will process messages. Messages will be received continuously on a separate thread.
             queueClient.RegisterMessageHandler(ProcessMessagesAsync, messageHandlerOptions);
         }
 
@@ -66,7 +66,7 @@ namespace ServiceBusReceiver
             // Process the message
             Console.WriteLine($"Received message: SequenceNumber:{message.SystemProperties.SequenceNumber} Body:{Encoding.UTF8.GetString(message.Body)}");
 
-            if (message.SystemProperties.SequenceNumber % 10 == 0)
+            if (message.SystemProperties.SequenceNumber % 25 == 0)
             {
                 Console.WriteLine($"Deadlettering message with sequence {message.SystemProperties.SequenceNumber}");
 
